@@ -118,7 +118,7 @@ export function AdminRoom(){
         
         await database.ref(`rooms/${roomId}`).update(
             {
-                endesAt:new Date(),
+                endedAt:new Date(),
             }
         )
         history.push('/');
