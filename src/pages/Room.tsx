@@ -21,7 +21,11 @@ export function Room(){
     const [newQuestion, setNewQuestion] = useState ('');
     const roomId =  params.id;
     const {title, questions} = useRoom( roomId);
-    let filter=1; 
+    let filter=3;
+    //filter=0 -> sem filtro
+    //filter=1 -> só as destacadas
+    //filter=2 ->por ordem de like
+    //filter=3 ->só as respondidas 
     
  
 
@@ -137,12 +141,19 @@ export function Room(){
 
                 <div className ="question-list">
                 {
-                questions.map(question =>{
+                    filter===2?(questions.sort((a,b)=> {return(a.likeCount>=b.likeCount?-1:1)})).map(question=>{
+                        return showquestion(question);}):questions.map(question =>{
                     if(filter===1 && question.isHighlighted){
                         return showquestion(question);
                     }
-                    return showquestion(question);
-                    })} 
+                    if(filter===3 && question.estaRespondida){
+                        return showquestion(question);
+                    }
+                    if(filter===0)
+                        return showquestion(question);
+                    return null;
+                    })
+                } 
 
                 </div>
 
